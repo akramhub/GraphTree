@@ -1,0 +1,33 @@
+graph = {'A': ['B', 'C'],
+             'B': ['C', 'D'],
+             'C': ['D'],
+             'D': ['C'],
+             'E': ['F'],
+             'F': ['C']}
+def find_path(graph, start, end, path=[]):
+    path=path+[start]
+    ListVisitedNodes=[start]
+    if start==end:
+        return path
+    if start not in graph:
+        return None
+    while(start!=None):
+        for node in graph[start]:
+            #print node,start,"node, start"
+            if node  not in ListVisitedNodes:
+                #print node
+                if node == end:
+                    path=path+[node]
+                    start=None
+                    return path
+                else:
+                    ListVisitedNodes.append(node)
+                    path=path+[node]
+                    #print path
+                    start=node
+                    
+            else:
+                start=None
+                path=[]
+    return path
+print find_path(graph,'E','C')
