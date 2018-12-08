@@ -1,0 +1,65 @@
+class Cache:
+    def __init__(self):
+        self.dict={}
+        self.dict_count={}
+        self.dict_size=0
+        self.heaplist=[]
+        
+    #o(1)  
+    def get(self,key):
+        if key in self.dict.keys():
+            self.dict_count[key]+=1
+            self.updateheap(key,self.dict_count[key])
+            return self.dict[key]
+    # o(1)       
+    def put(self,key,value):
+        
+        if len(self.dict)<=10:
+            self.dict[key]=value
+            self.dict_count[key]=1
+            self.updateheap(key,self.dict_count[key])
+        else:
+            key_less=self.heaplist[0][0]
+            del self.dict[key_less]  
+            self.dict[key]=value
+            self.dict_count[key]=1
+            self.updateheap(key,self.dict_count[key])
+    
+            
+    def updateheap(self,key, value):
+        #print self.heaplist
+        #self.heaplist.remove([key,1])
+        
+        self.heaplist.append([key,value])
+        print self.heaplist, "heaplist"
+        p=len(self.heaplist)-1
+        while( self.heaplist[p][1]<=self.heaplist[(p-1)/2][1] and p>0):
+            #print p,(p-1)/2
+            self.swap(self.heaplist,p,(p-1)/2)
+            
+            p=(p-1)/2
+            print p,"p"
+        return 
+    def swap(self,ah,a,b):
+        temp=ah[a]
+        ah[a]=ah[b]
+        ah[b]=temp
+        
+
+c=Cache()
+c.put('a',1)
+c.put('b',2)
+c.put('c',3)
+c.put('d',4)
+c.put('e',5)
+print c.get("c")
+print c.get("c")
+print c.get("b")
+print c.get("c")
+print c.get("b")
+print c.get("a")
+print c.get("b")
+print len(c.dict), "size--------------------------------------"
+
+#print c.getSmall_Key('d')
+   
