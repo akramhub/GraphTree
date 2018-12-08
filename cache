@@ -1,0 +1,76 @@
+class Cache:
+    def __init__(self):
+        self.dict={}
+        self.ll_head=None
+        self.ll_end=None
+    def get(self,key):
+        if key in self.dict.keys():
+            pre = self.dict[key].pre
+            nex = self.dict[key].next
+            self.dict[key].next = self.ll_head
+            self.ll_head.pre = self.dict[key]
+            pre.next = nex
+            nex.pre = pre
+            self.ll_head = self.dict[key]
+            self.print_ll()
+            return self.dict[key].value
+        else:
+            print " no such a key was found"
+            self.print_ll()
+            return None
+            
+    def put(self,key,value):
+        print 'new key value',key , value
+        if key not in self.dict.keys():
+            self.dict[key] =Node(value,key)
+            if len(self.dict)<=5:
+                
+                if (self.ll_head==None):
+                    self.ll_head=self.dict[key]
+                    self.ll_end=self.dict[key]
+                else:
+                    self.dict[key].next = self.ll_head
+                    self.ll_head.pre = self.dict[key]
+                    self.ll_head = self.dict[key]
+                    #print self.ll_end.value,"llllllllllllll"
+                    #print self.ll_end.pre.value,"key"
+            else:
+                pre=self.ll_end.pre
+                pre.next=None
+                self.dict.pop(self.ll_end.key)
+                self.ll_end=pre
+                #add node to the first
+                self.dict[key].next=self.ll_head
+                self.ll_head.pre = self.dict[key]
+                self.ll_head = self.dict[key]
+        self.print_ll()
+        
+    def print_ll(self):
+        c=0
+        current_node = self.ll_head
+        print "ssssssssssssssssss"
+        while(current_node!=None and c<10):
+            c+=1
+            print current_node.value
+            current_node=current_node.next
+        print "eeeeeeeeeeeeeeeee" ,c
+    
+class Node:
+    def __init__(self,value, key):
+        self.value=value
+        self.next=None
+        self.pre=None
+        self.key = key
+c=Cache()
+c.put('a',1)
+#c.print_ll()
+c.put('b',2)
+c.get('e')
+
+c.put('c',3)
+c.get('b')
+c.put('d',4)
+c.put('e',5)
+c.put('f',6)
+c.get('e')
+c.put('n',7)
