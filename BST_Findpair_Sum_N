@@ -1,0 +1,75 @@
+class node:
+    def __init__(self,value):
+        self.value=value
+        self.left=None
+        self.right=None
+def insertTree(root, value):
+    if root==None:
+        node(value)
+        return node(value)
+    else:
+        if value<=root.value:
+            
+            root.left=insertTree(root.left,value)
+            
+        else:
+            
+            root.right=insertTree(root.right,value)
+            
+    return root
+def printTree(root):
+    
+    if root!=None:
+        
+        printTree(root.left)
+        
+        print root.value,"l"
+        printTree(root.right)
+        
+    else:
+        return 
+            
+    
+def findPairTree(root,sumN, s):
+    print "ye bare dige---------------"
+    if root==None:
+        return False
+    else:
+        print "jjjjjjjj"
+        if(findPairTree(root.left,sumN,s)):
+            print "left true shod",root.left
+            return Ture
+        if (sumN-root.value) in s:
+            print "pair are found: (", root.value,sumN-root.value,")"
+            return True
+        else:
+            s.add(root.value)
+            print root.value,"is added to set"
+        return (findPairTree(root.right,sumN,s))    
+    
+def findPair(root,n):
+    s=set()
+    sumN=n
+    if not (findPairTree(root,sumN, s)):
+        print "pair are not exist"
+root=None
+
+root=insertTree(root,15)
+
+root=insertTree(root,10)
+
+root=insertTree(root,20)
+
+root=insertTree(root,8)
+
+root=insertTree(root,12)
+
+root=insertTree(root,16)
+root=insertTree(root,25)
+print "--------------"
+root=insertTree(root,10)
+root=insertTree(root,4)
+printTree(root)
+findPair(root,33)
+printTree(root)
+
