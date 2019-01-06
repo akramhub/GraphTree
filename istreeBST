@@ -1,0 +1,36 @@
+arr=[3,3,10,1,6,14,4,7,13]
+class node:
+    def __init__(self,val):
+        self.val=val
+        self.left=None
+        self.right=None
+def createTree(arr):
+    n=[]
+    for i in range(len(arr)):
+        n.append(node(arr[i]))
+    return n
+        
+n=createTree(arr) 
+n[0].left=n[1]
+n[0].right=n[2]
+n[1].left=n[3]
+n[1].right=n[4]
+n[2].right=n[5]
+n[4].left=n[6]
+n[4].right=n[7]
+n[5].left=n[8]
+root=n[0]
+
+def istreeBST(root):
+    if root==None:
+        return True
+    if root.left and root.left.val>root.val :
+        return False
+    if root.right and root.right.val<root.val:
+        return False
+    if not istreeBST(root.left) or  not istreeBST(root.right):
+        return False
+    return True
+    
+print (istreeBST(root))
+    
